@@ -89,5 +89,14 @@ padding:3em 1em
 
   .uploadedText{
     padding: 2em;
+  }
 
+  #searchbar{
+    align-self: flex-end;
+    margin-top:-3em
+    
+  }
+  
+  .searchBtn{
+    margin-right: 1em;
   }
