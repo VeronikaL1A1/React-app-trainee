@@ -5,7 +5,7 @@ class FileOutput extends React.Component {
     textRender = () => {
         const item = this.props.text;
         if (!item) return null;
-        if (typeof item.description && typeof item.title === "string" &&  !item.downloadURL) {
+        if (typeof item.description && typeof item.title === "string" &&  !item.url) {
             return (
                 <> 
                
@@ -18,9 +18,9 @@ class FileOutput extends React.Component {
 
         }
 
-        else if(typeof item.description && typeof item.title === "string" && typeof item.downloadURL === "string") {
+        else if(typeof item.description && typeof item.title === "string" && typeof item.url === "string") {
             return (<>
-             <img src={item.downloadURL} alt="uploaded picture" width="10em"/>
+             <img src={item.url} alt="uploaded picture" width="10em"/>
              <h3><span dangerouslySetInnerHTML={{ __html: item.title }} /></h3>
                     <p>
                         <span dangerouslySetInnerHTML={{ __html: item.description }} />

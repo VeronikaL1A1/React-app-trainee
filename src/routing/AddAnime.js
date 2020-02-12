@@ -9,6 +9,7 @@ import axios from 'axios';
 import Searchbar from '../components/Searchbar';
 
 
+
 class AddAnime extends React.Component {
     constructor (props){
         super(props);
@@ -17,7 +18,8 @@ class AddAnime extends React.Component {
             inputs:[],
             files:[],
             search:"",
-            searchedInputs:[]
+            searchedInputs:[],
+            url:""
         }
     }
   
@@ -30,18 +32,25 @@ class AddAnime extends React.Component {
             //    console.log(this.state.inputs.description)
             }
 
-         onInput = async (title,description,url) => {
+
+      
+         onInput = async (title,description) => {
         //    console.log(title,description);
-        console.log(url)
+            
                 const newInput ={
                     title: title,
                     description: description,
-                    downloadURL:url
+                    url:this.state.url
+                    
                 }
                 
                 await axios.post('https://anime-page-6d6f8.firebaseio.com/newAnime.json',newInput)
 
                 this.setState(prevState=>{return {inputs:prevState.inputs.concat(newInput)}});
+            }
+
+            getUrl =(address)=>{
+                this.setState({url:address})
             }
 
             // onImageInput =  (url)=> {
@@ -54,13 +63,14 @@ class AddAnime extends React.Component {
                 let {inputs} = this.state;
                 this.setState({searchedInputs:inputs})
             }
+            
             onSearch = (event) =>
                 this.setState({search:event.target.value})
             
                 handleClick =()=> {
                     let {inputs, search} = this.state;
                   
-                    if ( search) {this.setState({searchedInputs:inputs.filter((input)=>input.description.toLowerCase().includes(search.toLowerCase()) || input.title.toLowerCase().includes(search.toLowerCase()))}) }
+                    if (search) {this.setState({searchedInputs:inputs.filter((input)=>input.description.toLowerCase().includes(search.toLowerCase()) || input.title.toLowerCase().includes(search.toLowerCase()))}) }
                     
                 }
     
@@ -79,7 +89,7 @@ class AddAnime extends React.Component {
                     
                      <div className="addAnime_wrapper container_2">
                          <h1>Add your favorite anime</h1>
-                         <FileInput onInput={this.onInput} onImageInput={this.onImageInput} />
+                         <FileInput onInput={this.onInput} onImageInput={this.onImageInput} getUrl={this.getUrl} />
                          <Searchbar  onSearch={this.onSearch}  search={this.state.search} handleClick={this.handleClick} onClear={this.onClear} />
                          {searchedInputs.length > 0 ? searchedInputs.map((item) => <FileOutput text={item}  />):inputs.map((item) => <FileOutput text={item}  />)}
                          {/* {inputs.map((item) => <FileOutput text={item}  />) } */}

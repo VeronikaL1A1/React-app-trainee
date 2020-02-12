@@ -12,7 +12,7 @@ class FileInput extends React.Component {
             description:"",
             image:null,
             progress:null,
-            downloadURL:""
+            // downloadURLko:""
         }
     }
     handleChange = async event => 
@@ -49,11 +49,11 @@ onSubmitChange =  (event,props)=>{
          (snapshot)=> {this.setState({progress:(snapshot.bytesTransferred / snapshot.totalBytes)*100})},
          (error) =>{},
          ()=> {
-            imgStorage.snapshot.ref.getDownloadURL().then(async (downloadURL) => {
-                await this.setState({downloadURL:downloadURL})
+            imgStorage.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            // this.setState({downloadURLko:downloadURL})
                 
                 // console.log(this.state.downloadURL);
-                // this.getUrl(downloadURL)
+                this.props.getUrl(downloadURL)
                 
             
                 // this.setState({downloadURL:downloadURL})
@@ -64,7 +64,7 @@ onSubmitChange =  (event,props)=>{
         
         
     )
-    this.props.onInput(this.state.title,this.state.description,this.state.downloadURL)
+    this.props.onInput(this.state.title,this.state.description)
    
 
 
@@ -105,5 +105,3 @@ onSubmitChange =  (event,props)=>{
 
 export default FileInput;
 
-
-// ref={this.input}
